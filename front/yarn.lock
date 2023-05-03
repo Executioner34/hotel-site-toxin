@@ -546,7 +546,7 @@
   resolved "https://registry.yarnpkg.com/@nuxt/devalue/-/devalue-2.0.1.tgz#e98de8a9dc7e0ecfbde565a805304995cc9db6fb"
   integrity sha512-mfiKiM9vICf1Obd/GEkuD74MCO1cImTXM/Yiuvn/zyn25VnJmUDecLy40mm+YMWnsjGliUzlNyGWllRvhHd7fA==
 
-"@nuxt/kit@3.4.3", "@nuxt/kit@^3.3.3":
+"@nuxt/kit@3.4.3", "@nuxt/kit@^3.3.2", "@nuxt/kit@^3.3.3":
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.4.3.tgz#2ab6efb0a4db7b4e5f4d8d7d7e696fa30a6e8771"
   integrity sha512-aQyzplYFCL292UsVZzlOZOC51ZKYFL0PBihbcPzxTzXQvAfMF8/DQ539kqzqXzxTCcmnUB9ROhIaNUrAeUkFYA==
@@ -681,6 +681,14 @@
     eslint-plugin-unicorn "^44.0.2"
     eslint-plugin-vue "^9.7.0"
     local-pkg "^0.4.2"
+
+"@nuxtjs/svg-sprite@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/svg-sprite/-/svg-sprite-1.0.2.tgz#afb968ceaf335bda3e240154151baa942711af4d"
+  integrity sha512-BAxo+r9Ub9pgrzGEH3eRZmQZ1icGxr5hB8aKgAHtb+4YZMbrS+H+RZUiP4mn6VXLFPsWCh0Ea+wjr9LfIjOgTQ==
+  dependencies:
+    "@nuxt/kit" "^3.3.2"
+    svgo "^3.0.2"
 
 "@pkgr/utils@^2.3.1":
   version "2.4.0"
