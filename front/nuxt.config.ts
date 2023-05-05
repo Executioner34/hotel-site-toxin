@@ -5,6 +5,10 @@ export default defineNuxtConfig({
       title: "Toxin",
       link: [
         {
+          href: "https://fonts.googleapis.com/icon?family=Material+Icons",
+          rel: "stylesheet",
+        },
+        {
           rel: "apple-touch-icon",
           sizes: "180x180",
           href: "/favicon/apple-touch-icon.png",
