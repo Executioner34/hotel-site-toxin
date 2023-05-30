@@ -4,7 +4,7 @@
       {{ label }}
     </label>
     <div v-else class="input-title">
-      <label for="props.id" class="label">{{ label }}</label>
+      <label :for="props.id" class="label">{{ label }}</label>
       <span class="ui-text">{{ uiState }}</span>
     </div>
     <input
@@ -69,6 +69,7 @@ const inputHandler = () => {
 
   .label {
     @include h3Text;
+    display: inline-block;
     margin-bottom: 5px;
   }
 
