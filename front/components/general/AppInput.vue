@@ -12,6 +12,7 @@
       v-model="value"
       :type="props.type"
       :placeholder="props.placeholder"
+      :disabled="props.disabled"
       class="input"
       @blur="inputHandler"
     />
@@ -25,6 +26,7 @@ interface IProps {
   id: string;
   label?: string;
   placeholder: string;
+  disabled?: boolean;
   uiState?: "Default" | "Hover / Focus";
 }
 
@@ -91,6 +93,15 @@ const inputHandler = () => {
     &:focus-visible,
     &:hover {
       border-color: $primaryColor50;
+    }
+
+    &[disabled] {
+      background-color: $white;
+
+      &:focus-visible,
+      &:hover {
+        border-color: $primaryColor25;
+      }
     }
   }
 
