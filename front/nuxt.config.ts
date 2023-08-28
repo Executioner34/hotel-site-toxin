@@ -41,7 +41,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   css: ["@/assets/scss/global.scss"],
+
   vite: {
     css: {
       preprocessorOptions: {
@@ -51,5 +53,14 @@ export default defineNuxtConfig({
       },
     },
   },
+
   modules: ["@nuxtjs/svg-sprite"],
+
+  build: {
+    transpile: ["@vuepic/vue-datepicker"],
+  },
+
+  devtools: {
+    enabled: true,
+  },
 });
