@@ -20,7 +20,7 @@
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "nuxt": "^3.7.0",
+    "nuxt": "^3.7.1",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   },
@@ -29,6 +29,7 @@
     "@vuepic/vue-datepicker": "^5.1.2",
     "@vueuse/core": "^10.1.2",
     "normalize-css": "^2.3.1",
+    "nuxi": "^3.7.3",
     "sass": "^1.62.1"
   }
 }
