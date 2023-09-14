@@ -1,6 +1,8 @@
-<template>
-  <svg-icon :name="props.name" :width="props.width" :height="props.height" />
-</template>
+<script lang="ts">
+export default {
+  name: "AppIcon",
+};
+</script>
 
 <script setup lang="ts">
 interface IProps {
@@ -15,4 +17,6 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 </script>
 
-<style scoped lang="scss"></style>
+<template>
+  <svg-icon :name="props.name" :width="props.width" :height="props.height" />
+</template>

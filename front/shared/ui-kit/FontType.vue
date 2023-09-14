@@ -1,9 +1,8 @@
-<template>
-  <li class="font-type-component">
-    <span class="name">{{ props.name }}</span>
-    <span class="text-example" v-html="props.example"></span>
-  </li>
-</template>
+<script lang="ts">
+export default {
+  name: "FontType",
+};
+</script>
 
 <script setup lang="ts">
 interface IProps {
@@ -18,6 +17,13 @@ const fontSize = computed(() => {
   return props.styleNameObj?.fontSize ? props.styleNameObj.fontSize : "14px";
 });
 </script>
+
+<template>
+  <li class="font-type-component">
+    <span class="name">{{ props.name }}</span>
+    <span class="text-example" v-html="props.example"></span>
+  </li>
+</template>
 
 <style scoped lang="scss">
 .font-type-component {

@@ -1,13 +1,8 @@
-<template>
-  <li class="the-color-component">
-    <div class="pallet"></div>
-    <div class="description">
-      <h2 class="title">{{ props.name }}</h2>
-      <p class="text">{{ props.colorName }}</p>
-    </div>
-  </li>
-</template>
-
+<script lang="ts">
+export default {
+  name: "TheColor",
+};
+</script>
 <script setup lang="ts">
 interface IProps {
   color?: string;
@@ -17,6 +12,16 @@ interface IProps {
 
 const props = defineProps<IProps>();
 </script>
+
+<template>
+  <li class="the-color-component">
+    <div class="pallet"></div>
+    <div class="description">
+      <h2 class="title">{{ props.name }}</h2>
+      <p class="text">{{ props.colorName }}</p>
+    </div>
+  </li>
+</template>
 
 <style scoped lang="scss">
 .the-color-component {

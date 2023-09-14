@@ -42,19 +42,24 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ["@/assets/scss/global.scss"],
+  css: ["@/app/styles/index.scss"],
 
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@/assets/scss/variables.scss" as *;',
+          additionalData: '@use "@/app/styles/variables.scss" as *;',
         },
       },
     },
   },
 
   modules: ["@nuxtjs/svg-sprite"],
+
+  svgSprite: {
+    input: "~/app/sprite/svg",
+    output: "~/app/sprite/gen",
+  },
 
   build: {
     transpile: ["@vuepic/vue-datepicker"],

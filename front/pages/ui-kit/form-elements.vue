@@ -1,9 +1,9 @@
 <template>
-  <ColorsAndTypePage></ColorsAndTypePage>
+  <FormElementsPage></FormElementsPage>
 </template>
 
 <script setup lang="ts">
-import { ColorsAndTypePage } from "~/pages-fsd/ui-kit";
+import { FormElementsPage } from "~/pages-fsd/ui-kit";
 
 definePageMeta({
   layout: "ui-kit",

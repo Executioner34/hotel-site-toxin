@@ -1,23 +1,8 @@
-<template>
-  <div class="app-input-component">
-    <label v-if="!props.uiState" :for="props.id" class="label">
-      {{ label }}
-    </label>
-    <div v-else class="input-title">
-      <label :for="props.id" class="label">{{ label }}</label>
-      <span class="ui-text">{{ uiState }}</span>
-    </div>
-    <input
-      :id="props.id"
-      v-model="value"
-      :type="props.type"
-      :placeholder="props.placeholder"
-      :disabled="props.disabled"
-      class="input"
-      @blur="inputHandler"
-    />
-  </div>
-</template>
+<script lang="ts">
+export default {
+  name: "AppInput",
+};
+</script>
 
 <script setup lang="ts">
 interface IProps {
@@ -53,6 +38,27 @@ const inputHandler = () => {
   emit("input");
 };
 </script>
+
+<template>
+  <div class="app-input-component">
+    <label v-if="!props.uiState" :for="props.id" class="label">
+      {{ label }}
+    </label>
+    <div v-else class="input-title">
+      <label :for="props.id" class="label">{{ label }}</label>
+      <span class="ui-text">{{ uiState }}</span>
+    </div>
+    <input
+      :id="props.id"
+      v-model="value"
+      :type="props.type"
+      :placeholder="props.placeholder"
+      :disabled="props.disabled"
+      class="input"
+      @blur="inputHandler"
+    />
+  </div>
+</template>
 
 <style scoped lang="scss">
 .app-input-component {

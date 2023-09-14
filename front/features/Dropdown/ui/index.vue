@@ -1,45 +1,14 @@
-<template>
-  <div ref="dropdown" class="app-dropdown-component">
-    <label :for="id" class="label">{{ label }}</label>
-    <div
-      :class="['input-wrapper', { 'input-wrapper--expand': isExpand }]"
-      @click="isExpand = !isExpand"
-    >
-      <input
-        :id="id"
-        type="text"
-        class="input-dropdown"
-        :value="inputString"
-        :placeholder="placeholder"
-      />
-      <div :class="['icon-wrapper', { 'icon-wrapper--expand': isExpand }]">
-        <span class="material-icons icon"> expand_more </span>
-      </div>
-    </div>
-    <div v-show="isExpand" class="items-list">
-      <dropdown-item
-        v-for="(item, key) in data"
-        :key="`dropdown-item-${key}`"
-        :name="item.name"
-        :value="item.value"
-        :max="item.max"
-        class="item"
-        @update-value="dropdownItemHandler"
-      />
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { onClickOutside } from "@vueuse/core";
-import DropdownItem from "~/components/general/AppDropdown/DropdownItem.vue";
+import { dropdownGuestDictionary } from "../lib";
+import DropdownItem from "./DropdownItem.vue";
 
 type IItem = {
   name: string;
   value: number;
   max?: number;
   dictionary?: {
-    [key: number]: string;
+    [key: number]: string | undefined;
   };
 };
 
@@ -56,10 +25,6 @@ interface IEmits {
   (e: "update:data", data: Array<IItem>): Array<IItem>;
 }
 
-interface IDictionary {
-  [key: number]: string;
-}
-
 const props = withDefaults(defineProps<IProps>(), {
   placeholder: "Сколько гостей",
   isDropdownGuests: false,
@@ -68,13 +33,6 @@ const props = withDefaults(defineProps<IProps>(), {
 const emit = defineEmits<IEmits>();
 
 const data = ref(props.data);
-
-const dropdownGuestDictionary: IDictionary = {
-  1: "Гость",
-  2: "Гостя",
-  3: "Гостя",
-  4: "Гостя",
-};
 
 const inputString = computed(() => {
   if (props.isDropdownGuests) {
@@ -124,6 +82,44 @@ const isExpand = ref(false);
 const dropdown = ref(null);
 onClickOutside(dropdown, () => (isExpand.value = false));
 </script>
+
+<script lang="ts">
+export default {
+  name: "DropdownPicker",
+};
+</script>
+
+<template>
+  <div ref="dropdown" class="app-dropdown-component">
+    <label :for="id" class="label">{{ label }}</label>
+    <div
+      :class="['input-wrapper', { 'input-wrapper--expand': isExpand }]"
+      @click="isExpand = !isExpand"
+    >
+      <input
+        :id="id"
+        type="text"
+        class="input-dropdown"
+        :value="inputString"
+        :placeholder="placeholder"
+      />
+      <div :class="['icon-wrapper', { 'icon-wrapper--expand': isExpand }]">
+        <span class="material-icons icon"> expand_more </span>
+      </div>
+    </div>
+    <div v-show="isExpand" class="items-list">
+      <DropdownItem
+        v-for="(item, key) in data"
+        :key="`dropdown-item-${key}`"
+        :name="item.name"
+        :value="item.value"
+        :max="item.max"
+        class="item"
+        @update-value="dropdownItemHandler"
+      />
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .app-dropdown-component {
