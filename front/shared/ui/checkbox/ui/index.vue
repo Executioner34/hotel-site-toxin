@@ -5,15 +5,22 @@ export default {
 </script>
 
 <script setup lang="ts">
+interface IProps {
+  modelValue: string | string[];
+  label: string;
+  id: string;
+  isRich?: boolean;
+  text?: string;
+}
+
 interface IEmits {
   (e: "update:modelValue", value: string | string[]): string[] | string;
 }
 
-const props = defineProps<{
-  modelValue: string | string[];
-  label: string;
-  id: string;
-}>();
+const props = withDefaults(defineProps<IProps>(), {
+  isRich: false,
+  text: "",
+});
 
 const emit = defineEmits<IEmits>();
 
@@ -28,7 +35,7 @@ const value = computed({
 </script>
 
 <template>
-  <label class="check">
+  <label :class="['check', { '--rich': isRich }]">
     <input
       :id="id"
       v-model="value"
@@ -38,6 +45,7 @@ const value = computed({
     />
     <span class="check__box"></span>
     {{ label }}
+    <span v-if="isRich" class="text">{{ text }}</span>
   </label>
 </template>
 
@@ -50,6 +58,16 @@ const value = computed({
   padding-left: 30px;
   font-size: 14px;
   line-height: 18px;
+  cursor: pointer;
+
+  &.--rich {
+    @include h3Text;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: 14px;
+    line-height: 18px;
+  }
 
   .check__input {
     position: absolute;
@@ -67,10 +85,17 @@ const value = computed({
 
   .check__input:checked + .check__box {
     border-color: $purpleColor;
-    background-image: url("@/assets/sprite/svg/check.svg");
+    background-image: url("@/app/sprite/svg/check.svg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 14px;
+  }
+
+  .text {
+    @include bodyText;
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 14px;
   }
 }
 </style>
