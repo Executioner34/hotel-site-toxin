@@ -1,3 +1,3 @@
-import Icon from "./index.vue";
+import SvgIcon from "./index.vue";
 
-export { Icon };
+export { SvgIcon };

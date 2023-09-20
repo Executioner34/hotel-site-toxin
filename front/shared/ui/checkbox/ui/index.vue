@@ -85,7 +85,7 @@ const value = computed({
 
   .check__input:checked + .check__box {
     border-color: $purpleColor;
-    background-image: url("@/app/sprite/svg/check.svg");
+    background-image: url("~/app/ico/check.svg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 14px;

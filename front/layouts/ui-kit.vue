@@ -1,7 +1,7 @@
 <template>
   <div class="ui-kit-layout">
     <header class="header">
-      <Icon name="toxin-logo-gray" width="48px" height="48px" />
+      <SvgIcon name="toxin-logo-gray" width="48px" height="48px" />
     </header>
     <main class="main">
       <slot></slot>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { Icon } from "@/shared/ui/icon";
+import { SvgIcon } from "@/shared/ui/icon";
 </script>
 
 <style scoped lang="scss">
