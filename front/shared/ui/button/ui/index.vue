@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface IProps {
   color?: "secondary" | "primary";
-  size?: "medium" | "large";
+  size?: "small" | "medium" | "large";
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<IProps>(), {
 const classList = computed(() => {
   const list = ["button"];
   if (props.color === "primary" || props.size === "large") list.push("_fill");
+  if (props.size === "small") list.push("_small");
   if (props.size === "large") list.push("_large");
   return list;
 });
@@ -93,6 +94,28 @@ const isLarge = computed(() => props.size === "large");
 
   &._fill:disabled {
     opacity: 0.5;
+  }
+
+  &._small {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: none;
+    color: $purpleColor;
+
+    &::before {
+      display: none;
+    }
+
+    &:target,
+    &:active,
+    &:disabled {
+      color: $primaryColor50;
+    }
+
+    .button__text {
+      color: inherit;
+    }
   }
 
   &._large {
