@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxtjs/svg-sprite", "nuxt-icon"],
+  modules: ["@nuxtjs/svg-sprite", "nuxt-icon", "@pinia/nuxt"],
 
   svgSprite: {
     input: "~/app/sprite/svg",
