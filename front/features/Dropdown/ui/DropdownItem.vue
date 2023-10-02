@@ -35,7 +35,18 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 const emit = defineEmits<IEmits>();
 
-const value = ref(props.value);
+const value = computed({
+  get() {
+    return props.value;
+  },
+  set(newValue) {
+    emit("updateValue", {
+      name: props.name,
+      value: newValue,
+      max: props.max,
+    });
+  },
+});
 const min = 0;
 
 const isDisabledDecrement = computed(() => {
@@ -48,14 +59,6 @@ const isDisabledIncrement = computed(() => {
 
 const buttonDecrement = () => (value.value -= 1);
 const buttonIncrement = () => (value.value += 1);
-
-watch(value, (newValue) =>
-  emit("updateValue", {
-    name: props.name,
-    value: newValue,
-    max: props.max,
-  })
-);
 </script>
 
 <style scoped lang="scss">

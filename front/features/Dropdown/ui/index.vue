@@ -1,28 +1,17 @@
 <script setup lang="ts">
 import { onClickOutside } from "@vueuse/core";
 import { dropdownGuestDictionary } from "../lib";
+import { IItem } from "../types";
 import DropdownItem from "./DropdownItem.vue";
-
-type IItem = {
-  name: string;
-  value: number;
-  max?: number;
-  dictionary?: {
-    [key: number]: string | undefined;
-  };
-};
+import { Button } from "@/shared/ui/button";
+import { dropdownModel } from "~/features/Dropdown/model";
 
 interface IProps {
   id: string;
   label: string;
-  data: Array<IItem>;
   placeholder?: string;
   isDropdownGuests?: boolean;
   isUIKit?: boolean;
-}
-
-interface IEmits {
-  (e: "update:data", data: Array<IItem>): Array<IItem>;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -30,57 +19,84 @@ const props = withDefaults(defineProps<IProps>(), {
   isDropdownGuests: false,
   isUIKit: false,
 });
-const emit = defineEmits<IEmits>();
 
-const data = ref(props.data);
+const store = dropdownModel();
+
+const { data: list } = await useAsyncData("list", async () => {
+  props.isDropdownGuests
+    ? await store.getGuestsData()
+    : await store.getRoomsData();
+  return store.list;
+});
 
 const inputString = computed(() => {
   if (props.isDropdownGuests) {
     return formatStringForGuest();
   }
-  const string = data.value
-    .filter((item) => item.value !== 0)
-    .map((item) => {
-      return formatString({ value: item.value, name: item.name });
-    })
-    .join(", ");
-  return string.length >= 35 ? string.slice(0, 35) + "..." : string;
+  if (list.value?.length) {
+    const string = list.value
+      .filter((item) => item.value !== 0)
+      .map((item) => {
+        return formatString({ value: item.value, name: item.name });
+      })
+      .join(", ");
+    return string.length >= 35 ? string.slice(0, 35) + "..." : string;
+  }
 });
 
 const formatString = (options: { value: number; name: string }): string => {
   const { value, name } = options;
-  const id = data.value.findIndex((item) => item.name === name);
-  if (id !== -1 && data.value[id].dictionary?.[value]) {
-    return value + " " + data.value[id].dictionary?.[value].toLowerCase();
+  if (list.value?.length) {
+    const id = list.value.findIndex((item) => item.name === name);
+    if (id !== -1 && list.value[id].dictionary?.[value]) {
+      return value + " " + list.value[id].dictionary?.[value]?.toLowerCase();
+    }
   }
   return value + " " + name.toLowerCase();
 };
 
 const formatStringForGuest = () => {
-  const sum = data.value.reduce(
-    (prev, item) => (item.name !== "Младенецы" ? prev + item.value : prev),
-    0
-  );
-  if (dropdownGuestDictionary[sum]) {
-    return `${sum} ${dropdownGuestDictionary[sum]}`;
+  if (list.value?.length) {
+    const sum = list.value.reduce(
+      (prev, item) => (item.name !== "младенцы" ? prev + item.value : prev),
+      0
+    );
+    if (dropdownGuestDictionary[sum]) {
+      return `${sum} ${dropdownGuestDictionary[sum]}`;
+    }
+    return sum !== 0 ? `${sum} Гостей` : "";
   }
-  return sum !== 0 ? `${sum} Гостей` : "";
 };
 
 const dropdownItemHandler = (options: IItem) => {
   const { name, value, max } = options;
-  const id = data.value.findIndex((item) => item.name === name);
-  if (id !== -1) {
-    data.value[id].value = value;
-    data.value[id].name = name;
-    data.value[id].max = max;
-    emit("update:data", data.value);
+  if (list.value?.length) {
+    const id = list.value.findIndex((item) => item.name === name);
+    if (id !== -1) {
+      list.value[id].value = value;
+      list.value[id].name = name;
+      list.value[id].max = max;
+    }
   }
 };
 
 const isExpand = ref(false);
 const dropdown = ref(null);
 onClickOutside(dropdown, () => (isExpand.value = false));
+
+const isVisibleClearButton = computed(() => {
+  if (list.value?.length) {
+    return list.value.some((item) => item.value !== 0);
+  }
+});
+
+const clearButtonHandler = () => {
+  list.value?.forEach((item) => (item.value = 0));
+};
+
+const confirmButtonHandler = () => {
+  isExpand.value = false;
+};
 </script>
 
 <script lang="ts">
@@ -91,7 +107,7 @@ export default {
 
 <template>
   <div ref="dropdown" class="app-dropdown-component">
-    <label :for="id" class="label">{{ label }}</label>
+    <label :for="id" class="label" v-text="props.label"></label>
     <div
       :class="['input-wrapper', { 'input-wrapper--expand': isExpand }]"
       @click="isExpand = !isExpand"
@@ -104,19 +120,30 @@ export default {
         :placeholder="placeholder"
       />
       <div :class="['icon-wrapper', { 'icon-wrapper--expand': isExpand }]">
-        <span class="material-icons icon"> expand_more </span>
+        <IconCSS
+          name="i-ic-baseline-expand-less"
+          size="24"
+          class="icon"
+        ></IconCSS>
       </div>
     </div>
     <div v-show="isExpand" class="items-list">
-      <DropdownItem
-        v-for="(item, key) in data"
-        :key="`dropdown-item-${key}`"
-        :name="item.name"
-        :value="item.value"
-        :max="item.max"
-        class="item"
-        @update-value="dropdownItemHandler"
-      />
+      <template v-for="(item, key) in list" :key="`dropdown-item-${key}`">
+        <DropdownItem
+          v-bind="item"
+          class="item"
+          @update-value="dropdownItemHandler"
+        />
+      </template>
+      <div v-if="props.isDropdownGuests" class="bottom">
+        <Button
+          :class="{ 'bottom__btn--hidden': !isVisibleClearButton }"
+          size="small"
+          @click="clearButtonHandler"
+          >очистить</Button
+        >
+        <Button size="small" @click="confirmButtonHandler">применить</Button>
+      </div>
     </div>
   </div>
 </template>
@@ -125,6 +152,7 @@ export default {
 .app-dropdown-component {
   display: flex;
   flex-direction: column;
+  max-width: 266px;
   width: 100%;
 
   .label {
@@ -189,6 +217,18 @@ export default {
 
   .item:not(:last-child) {
     margin-bottom: 7px;
+  }
+
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 19px;
+    margin-bottom: 5px;
+
+    &__btn--hidden {
+      opacity: 0;
+    }
   }
 }
 </style>
