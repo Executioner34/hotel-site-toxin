@@ -28,6 +28,7 @@
   "dependencies": {
     "@nuxtjs/svg-sprite": "^1.0.2",
     "@pinia/nuxt": "^0.4.11",
+    "@vueform/slider": "^2.1.7",
     "@vuepic/vue-datepicker": "^6.1.0",
     "@vueuse/core": "^10.1.2",
     "normalize-css": "^2.3.1",
