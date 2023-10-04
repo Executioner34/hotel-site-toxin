@@ -1,3 +1,2 @@
-import Dropdown from "./ui/index.vue";
-
-export { Dropdown };
+export * from "./ui";
+export * from "./model";
