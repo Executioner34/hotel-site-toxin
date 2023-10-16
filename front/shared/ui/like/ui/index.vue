@@ -45,7 +45,7 @@ const likeToggle = () => {
   justify-content: space-between;
   width: 40px;
   height: 20px;
-  padding: 3px 7px 4px;
+  padding: 5px 7px 4px;
   background-color: $white;
   border: 1px solid $primaryColor25;
   border-radius: 10px;

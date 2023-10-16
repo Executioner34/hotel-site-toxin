@@ -2,9 +2,9 @@
 import { onClickOutside } from "@vueuse/core";
 import { dropdownGuestDictionary } from "../lib";
 import { IItem } from "../types";
+import { dropdownModel } from "../model";
 import DropdownItem from "./DropdownItem.vue";
 import { Button } from "@/shared/ui/button";
-import { dropdownModel } from "~/features/Dropdown/model";
 
 interface IProps {
   id: string;
