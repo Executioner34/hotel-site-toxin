@@ -48,6 +48,8 @@ const isLarge = computed(() => props.size === "large");
   background-color: $white;
   border: 2px solid transparent;
   border-radius: 44px;
+  user-select: text;
+  cursor: pointer;
 
   &::before {
     content: "";
@@ -64,7 +66,11 @@ const isLarge = computed(() => props.size === "large");
 
   &:active::before,
   &:target::before,
-  &:disabled::before {
+  &:hover::before {
+    opacity: 0.5;
+  }
+
+  &:disabled {
     opacity: 0.5;
   }
 
@@ -83,7 +89,8 @@ const isLarge = computed(() => props.size === "large");
     }
 
     &:target,
-    &:active {
+    &:active,
+    &:hover {
       opacity: 0.5;
     }
 
@@ -93,7 +100,7 @@ const isLarge = computed(() => props.size === "large");
   }
 
   &._fill:disabled {
-    opacity: 0.5;
+    opacity: 0.1;
   }
 
   &._small {
@@ -109,7 +116,7 @@ const isLarge = computed(() => props.size === "large");
 
     &:target,
     &:active,
-    &:disabled {
+    &:hover {
       color: $primaryColor50;
     }
 

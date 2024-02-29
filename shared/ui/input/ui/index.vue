@@ -7,7 +7,7 @@ export default {
 <script setup lang="ts">
 interface IProps {
   modelValue?: string | number;
-  type: "text" | "number";
+  type: "text" | "number" | "email" | "password";
   id: string;
   label?: string;
   placeholder: string;
@@ -44,7 +44,7 @@ const inputHandler = () => {
     <label v-if="!props.uiState" :for="props.id" class="label">
       {{ label }}
     </label>
-    <div v-else class="input-title">
+    <div v-else-if="props.label" class="input-title">
       <label :for="props.id" class="label">{{ label }}</label>
       <span class="ui-text">{{ uiState }}</span>
     </div>
@@ -54,6 +54,7 @@ const inputHandler = () => {
       :type="props.type"
       :placeholder="props.placeholder"
       :disabled="props.disabled"
+      autocomplete="on"
       class="input"
       @blur="inputHandler"
     />
